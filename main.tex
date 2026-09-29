@@ -1,0 +1,370 @@
+% 感悟论语
+% A reading edition set with XeLaTeX.
+% Chinese: Noto Serif CJK (Source Han Serif). Latin: TeX Gyre Pagella.
+% Quotations: AR PL UKai.
+\documentclass[UTF8,fontset=none,openany,twoside,11pt]{ctexbook}
+
+\synctex=1
+
+\usepackage{geometry}
+\geometry{
+  paperwidth=170mm,
+  paperheight=240mm,
+  inner=22mm,
+  outer=17mm,
+  top=19mm,
+  bottom=17mm,
+  headheight=16pt,
+  headsep=6.5mm,
+  footskip=11mm,
+}
+
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}[
+  Scale=0.93,
+  Numbers=OldStyle,
+  Ligatures=TeX,
+]
+\setCJKmainfont{Noto Serif CJK SC}[
+  BoldFont={Noto Serif CJK SC Medium},
+  ItalicFont={Noto Serif CJK SC},
+]
+\setCJKsansfont{Noto Sans CJK SC}[
+  BoldFont={Noto Sans CJK SC Medium},
+]
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[
+  BoldFont={Noto Serif CJK SC Medium},
+]
+\setCJKfamilyfont{zhkai}{AR PL UKai CN}
+\newcommand{\songti}{\CJKfamily{zhsong}}
+\newcommand{\kaishu}{\CJKfamily{zhkai}}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{bookmark}
+
+\definecolor{paper}{HTML}{F7F4EE}
+\definecolor{coverbg}{HTML}{E8DCC8}
+\definecolor{ink}{HTML}{241F1C}
+\definecolor{inksoft}{HTML}{5E584F}
+\definecolor{cinnabar}{HTML}{8C3A32}
+\definecolor{rule}{HTML}{C9BCAA}
+\definecolor{quotebg}{HTML}{F1EBE1}
+
+\pagecolor{paper}
+\color{ink}
+
+\linespread{1.28}
+\setlength{\parindent}{2em}
+\emergencystretch=2.5em
+\raggedbottom
+\clubpenalty=4000
+\widowpenalty=4000
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ink,
+  urlcolor=cinnabar,
+  citecolor=ink,
+  pdftitle={感悟论语：传统文化对现代生活的启示},
+  pdfauthor={田冀焕},
+  pdfdisplaydoctitle=true,
+  bookmarksnumbered=false,
+}
+
+% ---------------------------------------------------------------------------
+% Plants, part openers, chapter plates
+% ---------------------------------------------------------------------------
+\newcommand{\thisplant}{artwork/pine.png}
+\newcommand{\plantcaption}{}
+\newcommand{\partquotetext}{}
+\newcommand{\partquotesrc}{}
+\newcommand{\currentpartname}{}
+\newcommand{\setpartplant}[5]{%
+  \renewcommand{\thisplant}{#1}%
+  \renewcommand{\plantcaption}{#2}%
+  \renewcommand{\partquotetext}{#3}%
+  \renewcommand{\partquotesrc}{#4}%
+  \renewcommand{\currentpartname}{#5}%
+}
+
+\newcommand{\PartNumeral}{%
+  \ifcase\value{part}\or 壹\or 贰\or 叁\or 肆\or 伍\or 陆\or 柒\or 捌\or 玖\fi
+}
+
+\newif\ifshowchapterplate
+\showchapterplatetrue
+
+\newcommand{\chaptertitlefont}[1]{%
+  \ifshowchapterplate
+    \ifx\currentpartname\@empty\else
+      {\zihao{-4}\color{cinnabar}\songti\currentpartname}\par\vspace{2.2mm}%
+    \fi
+  \fi
+  {\zihao{1}\songti\color{ink}#1}%
+}
+
+\newcommand{\chapterafter}{%
+  \par\vspace{1.6mm}{\color{cinnabar}\rule{14mm}{0.4pt}}%
+}
+
+\newcommand{\parttitlefont}[1]{{\zihao{1}\songti\color{ink}#1}}
+
+\newcommand{\partafter}{%
+  \par\vspace{5mm}%
+  {\color{cinnabar}\rule{14mm}{0.4pt}}\par
+  \vspace{7mm}%
+  \includegraphics[width=62mm,height=74mm,keepaspectratio]{\thisplant}\par
+  \vspace{1.6mm}%
+  {\zihao{6}\color{inksoft}\songti\plantcaption}\par
+  \ifx\partquotetext\@empty\else
+    \vspace{6.5mm}%
+    {\zihao{4}\kaishu\color{ink}\partquotetext}\par
+    \vspace{1.4mm}%
+    {\zihao{-5}\color{cinnabar}\partquotesrc}\par
+  \fi
+}
+
+\ctexset{
+  part = {
+    pagestyle = empty,
+    numbering = true,
+    name = {},
+    number = \PartNumeral,
+    aftername = \par\vspace{2.2mm},
+    format = \centering,
+    numberformat = \zihao{-2}\color{cinnabar}\songti,
+    titleformat = \parttitlefont,
+    aftertitle = \partafter,
+    beforeskip = 8mm,
+    afterskip = 0pt,
+    fixskip = true,
+  },
+  chapter = {
+    pagestyle = plain,
+    numbering = false,
+    name = {},
+    format = \centering,
+    titleformat = \chaptertitlefont,
+    aftertitle = \chapterafter,
+    beforeskip = 8mm,
+    afterskip = 8mm,
+    fixskip = true,
+    afterindent = true,
+  },
+  section = {
+    numbering = false,
+    format = \zihao{-3}\songti\raggedright\color{ink},
+    beforeskip = 1.35em,
+    afterskip = 0.55em,
+    fixskip = true,
+    afterindent = true,
+  },
+  subsection = {
+    numbering = false,
+    format = \zihao{4}\songti\raggedright\color{ink},
+    beforeskip = 1em,
+    afterskip = 0.4em,
+  },
+}
+
+% ---------------------------------------------------------------------------
+% Running headers and page numbers
+% ---------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\zihao{-5}\color{inksoft}\songti 感悟论语}
+\fancyhead[RO]{\zihao{-5}\color{inksoft}\songti\leftmark}
+\fancyfoot[LE]{\zihao{-5}\color{inksoft}·\,\thepage\,·}
+\fancyfoot[RO]{\zihao{-5}\color{inksoft}·\,\thepage\,·}
+\renewcommand{\headrule}{%
+  {\color{rule}\hrule height 0.28pt width \headwidth}%
+}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[LE,RO]{\zihao{-5}\color{inksoft}·\,\thepage\,·}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\headrule}{}%
+}
+
+% ---------------------------------------------------------------------------
+% Quotations, dates, captions
+% ---------------------------------------------------------------------------
+\newtcolorbox{classic}{
+  breakable,
+  enhanced,
+  colback=quotebg,
+  colframe=quotebg,
+  boxrule=0pt,
+  arc=0pt,
+  outer arc=0pt,
+  borderline west={1.15pt}{0pt}{cinnabar},
+  left=1.05em,
+  right=0.7em,
+  top=0.5em,
+  bottom=0.45em,
+  before skip=0.85em,
+  after skip=0.8em,
+  fontupper=\kaishu\zihao{5}\color{ink},
+  before upper={\parindent=0pt\parskip=0.38em\linespread{1.18}\selectfont},
+}
+
+\newcommand{\quotsource}[1]{%
+  \par\addvspace{0.75em}%
+  {\centering\zihao{5}\kaishu\color{cinnabar}#1\par}%
+  \addvspace{0.15em}%
+}
+
+\newcommand{\entrydate}[1]{%
+  \par\nopagebreak\vspace{0.2em}%
+  {\raggedleft\zihao{5}\color{inksoft}#1\par}%
+}
+
+\newcommand{\captiontext}{\zihao{6}\kaishu\color{inksoft}}
+% A Chinese two-inch portrait is 35 mm by 49 mm.
+\newcommand{\discipleportrait}[2]{%
+  \par\addvspace{0.55em}%
+  \noindent
+  \begin{minipage}[t]{36mm}
+    \vspace{0pt}%
+    \centering
+    \includegraphics[width=35mm,height=49mm,keepaspectratio]{#1}%
+  \end{minipage}%
+  \hspace{3.2mm}%
+  \begin{minipage}[t]{\dimexpr\linewidth-36mm-3.2mm\relax}
+    \vspace{0pt}%
+    \zihao{-5}\songti\color{ink}\raggedright #2%
+  \end{minipage}%
+  \par\addvspace{0.75em}%
+}
+
+\setlist[itemize]{
+  leftmargin=1.7em,
+  itemsep=0.2em,
+  topsep=0.35em,
+  parsep=0.05em,
+  label=\textcolor{cinnabar}{\textbullet},
+}
+
+\pretocmd{\tableofcontents}{\showchapterplatefalse}{}{}
+\apptocmd{\tableofcontents}{\showchapterplatetrue}{}{}
+
+% ---------------------------------------------------------------------------
+% Cover, title page, colophon, plates
+% ---------------------------------------------------------------------------
+\newcommand{\coverframe}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw[cinnabar, line width=0.45pt]
+      ([xshift=11mm, yshift=-11mm]current page.north west)
+      rectangle
+      ([xshift=-11mm, yshift=11mm]current page.south east);
+    \draw[ink, line width=0.18pt]
+      ([xshift=12.3mm, yshift=-12.3mm]current page.north west)
+      rectangle
+      ([xshift=-12.3mm, yshift=12.3mm]current page.south east);
+  \end{tikzpicture}%
+}
+
+\newcommand{\makecover}{%
+  \pagecolor{coverbg}%
+  \thispagestyle{empty}%
+  \coverframe
+  \vspace*{0pt plus 1.05fil}%
+  \begin{center}
+    {\zihao{0}\color{ink}\songti 感悟论语}\\[4mm]
+    {\color{cinnabar}\rule{22mm}{0.45pt}}\\[4.2mm]
+    {\zihao{4}\color{inksoft}\songti 传统文化对现代生活的启示}\\[13mm]
+    {\zihao{-3}\color{ink}\songti 田冀焕}\\[8mm]
+    {\zihao{-5}\color{inksoft}\songti 二〇二五}%
+  \end{center}
+  \vspace*{0pt plus 1.4fil}%
+  \clearpage
+  \pagecolor{paper}%
+}
+
+\newcommand{\makecolophon}{%
+  \thispagestyle{empty}%
+  \vspace*{18mm}
+  \begin{center}
+    {\zihao{-3}\songti 感悟论语}\\[1.4mm]
+    {\zihao{5}\color{inksoft}\songti 传统文化对现代生活的启示}\\[5mm]
+    {\zihao{-4}\songti 田冀焕\ 著}
+  \end{center}
+  \vspace{8mm}
+  \begingroup
+    \zihao{5}\songti\color{inksoft}%
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0.55em}%
+    \setlength{\leftskip}{1.6em}%
+    \setlength{\rightskip}{1.6em}%
+    本书由作者刊于个人博客「止于至善」（\href{https://jihuan-tian.github.io/}{https://jihuan-tian.github.io/}）的文章整理而成，更新于二〇二五年十月一日。欢迎下载与阅读。本书采用知识共享署名-非商业性使用-禁止演绎\,4.0\,国际许可协议，不得修改，亦不得用于商业目的。\par
+    正文汉字用思源宋体（Noto Serif CJK，SIL Open Font License），西文用 \mbox{TeX Gyre Pagella}（GUST Font License）。引文用文鼎\,PL\,简中楷（AR PL UKai，Arphic Public License）。三者都可自由使用。\par
+    各卷卷首的松、竹、梅，取岁寒之象，并系于《论语》成句。桃、荇菜、唐棣、木瓜则来自《论语》引及或再三称道的《诗经》。\par
+  \endgroup
+}
+
+\newcommand{\plate}[3]{%
+  \clearpage
+  \thispagestyle{empty}%
+  \vspace*{6mm}
+  \begin{center}
+    \includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{#1}\\[5.5mm]
+    {\zihao{5}\kaishu\color{inksoft} #2}\\[1.3mm]
+    {\zihao{6}\color{cinnabar} #3}
+  \end{center}
+  \vfill
+}
+
+\newcommand{\makeendpage}{%
+  \clearpage
+  \pagecolor{coverbg}%
+  \thispagestyle{empty}%
+  \coverframe
+  \vspace*{0pt plus 1.05fil}%
+  \begin{center}
+    {\zihao{-2}\kaishu\color{ink} 学而时习之，不亦说乎}\\[4mm]
+    {\color{cinnabar}\rule{22mm}{0.45pt}}\\[4.2mm]
+    {\zihao{5}\color{cinnabar}\songti 《论语·学而》}%
+  \end{center}
+  \vspace*{0pt plus 1.4fil}%
+}
+
+\makeatletter
+\newcommand{\startfront}{%
+  \@mainmatterfalse
+  \pagenumbering{roman}%
+}
+\makeatother
+
+\begin{document}
+\startfront
+\makecover
+\makecolophon
+\plate{figures/confucius.png}{明代《孔子燕居像》}{}
+\plate{figures/stone-analects.jpg}{学而时习之，不亦说乎}{《论语·学而》}
+\renewcommand{\currentpartname}{}
+\renewcommand{\thisplant}{artwork/pine.png}
+\input{chapters/卷首}
+\tableofcontents
+\mainmatter
+\input{chapters/品性与修养}
+\input{chapters/学习与科研}
+\input{chapters/职场}
+\input{chapters/习惯}
+\input{chapters/家庭}
+\input{chapters/生活与社会}
+\input{chapters/论语学习与解读}
+\input{chapters/附录一}
+\input{chapters/附录二}
+\makeendpage
+\end{document}
