@@ -4,11 +4,11 @@
 
 田冀焕 著
 
-本书由个人博客「止于至善」的文章整理而成，供下载与阅读。排版稿开本为 170mm × 240mm。
+本书由个人博客「止于至善」（https://jihuan-tian.github.io/）的文章整理而成，供下载与阅读。排版稿开本为 170mm × 240mm。
 
 许可协议为知识共享署名-非商业性使用-禁止演绎 4.0 国际（CC BY-NC-ND 4.0）：不得修改，不得用于商业目的。详见 [`LICENSE`](LICENSE)。
 
-阅读本：[`感悟论语.pdf`](感悟论语.pdf)
+阅读本：[`感悟论语.pdf`](https://github.com/jihuan-tian/ganwu-lunyu/releases/download/v1.0/ganwu-lunyu.pdf)
 
 ## 如何编译
 
